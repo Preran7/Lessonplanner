@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Plan Resource Finder - Educational Materials Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --info-color: #3b82f6;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-animation span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: move 25s linear infinite;
+            bottom: -150px;
+        }
+        
+        .bg-animation span:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+        }
+        
+        .bg-animation span:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 12s;
+        }
+        
+        .bg-animation span:nth-child(3) {
+            left: 70%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 4s;
+        }
+        
+        .bg-animation span:nth-child(4) {
+            left: 40%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+        
+        .bg-animation span:nth-child(5) {
+            left: 65%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 0s;
+        }
+        
+        .bg-animation span:nth-child(6) {
+            left: 75%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 3s;
+        }
+        
+        .bg-animation span:nth-child(7) {
+            left: 35%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 7s;
+        }
+        
+        .bg-animation span:nth-child(8) {
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            animation-delay: 15s;
+            animation-duration: 45s;
+        }
+        
+        .bg-animation span:nth-child(9) {
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            animation-delay: 2s;
+            animation-duration: 35s;
+        }
+        
+        .bg-animation span:nth-child(10) {
+            left: 85%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 0s;
+            animation-duration: 11s;
+        }
+        
+        @keyframes move {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 0;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            height: 100vh;
+            background: var(--gradient);
+            position: fixed;
+            width: 280px;
+            padding-top: 30px;
+            z-index: 100;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-header {
+            text-align: center;
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h3 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 15px 25px;
+            margin: 5px 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar .nav-link i {
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Search Container */
+        .search-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 35px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+        }
+        
+        .search-container h2 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-container h2 i {
+            margin-right: 12px;
+            color: var(--primary-color);
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .form-label {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        /* Filter Chips */
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            margin: 5px;
+            background: #f1f5f9;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .filter-chip:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        
+        .filter-chip.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        .filter-chip i {
+            margin-right: 6px;
+        }
+        
+        /* Buttons */
+        .btn {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-outline-secondary {
+            border: 2px solid #e2e8f0;
+            color: var(--dark-color);
+        }
+        
+        .btn-outline-secondary:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        
+        /* Result Cards */
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .result-header {
+            padding: 18px 25px;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        
+        .video-header {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        .article-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        
+        .worksheet-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .result-item {
+            padding: 20px 25px;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .result-description {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .result-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .result-source {
+            font-size: 0.85rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-source i {
+            margin-right: 5px;
+        }
+        
+        .result-age {
+            font-size: 0.85rem;
+            background: #f1f5f9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: var(--dark-color);
+        }
+        
+        /* Video Thumbnail */
+        .video-thumbnail {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-thumbnail .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .video-thumbnail:hover .play-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-thumbnail .play-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .video-thumbnail:hover .play-button {
+            transform: scale(1.1);
+            background: white;
+        }
+        
+        .video-thumbnail .play-button i {
+            color: var(--danger-color);
+            font-size: 1.5rem;
+            margin-left: 3px;
+        }
+        
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 25px;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #64748b;
+            font-weight: 500;
+            border: none;
+            padding: 12px 20px;
+            margin-right: 5px;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--primary-color);
+            background: #f8fafc;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background: white;
+            border-bottom: 3px solid var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3em;
+        }
+        
+        /* No Results */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        .custom-toast {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            min-width: 300px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .toast-icon {
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+        
+        .toast-success {
+            color: var(--success-color);
+        }
+        
+        .toast-error {
+            color: var(--danger-color);
+        }
+        
+        .toast-info {
+            color: var(--info-color);
+        }
+        
+        /* Stats Cards */
+        .stats-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .stats-card .stats-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .stats-card.videos .stats-icon {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .stats-card.articles .stats-icon {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info-color);
+        }
+        
+        .stats-card.worksheets .stats-icon {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+        
+        .stats-card h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .stats-card p {
+            color: #64748b;
+            margin: 0;
+        }
+        
+        /* Saved Resources */
+        .saved-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .saved-item:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .saved-item h5 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .saved-item p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .saved-item .meta-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .saved-item .meta-info span {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        
+        /* Topic Suggestions */
+        .topic-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .topic-suggestion {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .topic-suggestion:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        
+        /* Related Topics */
+        .related-topics {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .related-topics h5 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .related-topic-item {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            padding: 6px 14px;
+            margin: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .related-topic-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar .nav-link span,
+            .sidebar-header h3,
+            .sidebar-header p {
+                display: none;
+            }
+            
+            .sidebar .nav-link {
+                justify-content: center;
+                padding: 15px;
+                margin: 5px 10px;
+            }
+            
+            .sidebar .nav-link i {
+                margin: 0;
+                font-size: 1.3rem;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+                padding: 20px;
+            }
+            
+            .search-container {
+                padding: 20px;
+            }
+            
+            .result-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Badge */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .badge-video {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .badge-article {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info-color);
+        }
+        
+        .badge-worksheet {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="bi bi-mortarboard-fill"></i> EduHub</h3>
+            <p>Your Teaching Assistant</p>
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#" data-page="search">
+                <i class="bi bi-search"></i>
+                <span>Search Resources</span>
+            </a>
+            <a class="nav-link" href="#" data-page="saved">
+                <i class="bi bi-bookmark-fill"></i>
+                <span>Saved Resources</span>
+            </a>
+            <a class="nav-link" href="#" data-page="about">
+                <i class="bi bi-info-circle-fill"></i>
+                <span>About</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Search Page -->
+        <div id="search-page" class="page-content">
+            <div class="search-container fade-in">
+                <h2><i class="bi bi-search"></i> Find Educational Resources</h2>
+                <form id="search-form">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="topic" class="form-label">Topic</label>
+                            <input type="text" class="form-control" id="topic" placeholder="e.g., Photosynthesis, Fractions, World War II" required>
+                            <div class="topic-suggestions">
+                                <div class="topic-suggestion" data-topic="Photosynthesis">Photosynthesis</div>
+                                <div class="topic-suggestion" data-topic="Fractions">Fractions</div>
+                                <div class="topic-suggestion" data-topic="World War II">World War II</div>
+                                <div class="topic-suggestion" data-topic="Solar System">Solar System</div>
+                                <div class="topic-suggestion" data-topic="Chemical Reactions">Chemical Reactions</div>
+                                <div class="topic-suggestion" data-topic="Ancient Egypt">Ancient Egypt</div>
+                                <div class="topic-suggestion" data-topic="Grammar">Grammar</div>
+                                <div class="topic-suggestion" data-topic="Geometry">Geometry</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="age-group" class="form-label">Student Age/Grade Group</label>
+                            <select class="form-select" id="age-group" required>
+                                <option value="" selected disabled>Select age/grade group</option>
+                                <option value="5-7">Ages 5-7 (Grades K-2)</option>
+                                <option value="8-10">Ages 8-10 (Grades 3-5)</option>
+                                <option value="11-13">Ages 11-13 (Grades 6-8)</option>
+                                <option value="14-16">Ages 14-16 (Grades 9-10)</option>
+                                <option value="17-18">Ages 17-18 (Grades 11-12)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Resource Types</label>
+                            <div class="d-flex flex-wrap">
+                                <div class="filter-chip active" data-type="video">
+                                    <i class="bi bi-play-circle-fill"></i> Videos
+                                </div>
+                                <div class="filter-chip active" data-type="article">
+                                    <i class="bi bi-file-text-fill"></i> Articles
+                                </div>
+                                <div class="filter-chip active" data-type="worksheet">
+                                    <i class="bi bi-file-earmark-text-fill"></i> Worksheets
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="reset" class="btn btn-outline-secondary me-md-2">
+                            <i class="bi bi-arrow-clockwise me-1"></i> Clear
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search me-1"></i> Search Resources
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Stats Cards -->
+            <div id="stats-container" style="display: none;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="stats-card videos">
+                            <div class="stats-icon">
+                                <i class="bi bi-play-circle-fill"></i>
+                            </div>
+                            <h3 id="video-count">0</h3>
+                            <p>Video Resources</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card articles">
+                            <div class="stats-icon">
+                                <i class="bi bi-file-text-fill"></i>
+                            </div>
+                            <h3 id="article-count">0</h3>
+                            <p>Article Resources</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card worksheets">
+                            <div class="stats-icon">
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                            </div>
+                            <h3 id="worksheet-count">0</h3>
+                            <p>Worksheet Resources</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div class="loading-spinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Finding the best educational resources...</p>
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results">
+                <i class="bi bi-search"></i>
+                <h4 class="mt-3">No results found</h4>
+                <p>Try adjusting your search terms or filters</p>
+            </div>
+
+            <!-- Results Container -->
+            <div id="results-container" style="display: none;">
+                <ul class="nav nav-tabs" id="results-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="videos-tab" data-bs-toggle="tab" data-bs-target="#videos" type="button" role="tab" aria-controls="videos" aria-selected="true">
+                            <i class="bi bi-play-circle-fill me-1"></i> Videos
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="articles-tab" data-bs-toggle="tab" data-bs-target="#articles" type="button" role="tab" aria-controls="articles" aria-selected="false">
+                            <i class="bi bi-file-text-fill me-1"></i> Articles
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="worksheets-tab" data-bs-toggle="tab" data-bs-target="#worksheets" type="button" role="tab" aria-controls="worksheets" aria-selected="false">
+                            <i class="bi bi-file-earmark-text-fill me-1"></i> Worksheets
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="results-tab-content">
+                    <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="videos-tab">
+                        <div id="videos-results"></div>
+                    </div>
+                    <div class="tab-pane fade" id="articles" role="tabpanel" aria-labelledby="articles-tab">
+                        <div id="articles-results"></div>
+                    </div>
+                    <div class="tab-pane fade" id="worksheets" role="tabpanel" aria-labelledby="worksheets-tab">
+                        <div id="worksheets-results"></div>
+                    </div>
+                </div>
+                
+                <!-- Related Topics Section -->
+                <div class="related-topics" id="related-topics" style="display: none;">
+                    <h5><i class="bi bi-lightbulb-fill me-2"></i>Related Topics</h5>
+                    <div id="related-topics-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved Resources Page -->
+        <div id="saved-page" class="page-content" style="display: none;">
+            <div class="search-container fade-in">
+                <h2><i class="bi bi-bookmark-fill"></i> Saved Resources</h2>
+                <div id="saved-resources">
+                    <p class="text-center text-muted">You haven't saved any resources yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="page-content" style="display: none;">
+            <div class="search-container fade-in">
+                <h2><i class="bi bi-info-circle-fill"></i> About EduHub</h2>
+                <p class="lead">Your intelligent teaching assistant for finding the best educational resources</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-lightbulb-fill text-warning me-2"></i>Our Mission</h5>
+                        <p>EduHub is designed to save teachers valuable time by providing a centralized search for high-quality, free educational materials across multiple platforms.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-rocket-takeoff-fill text-primary me-2"></i>How It Works</h5>
+                        <ol>
+                            <li>Enter your teaching topic</li>
+                            <li>Select student age/grade level</li>
+                            <li>Choose resource types</li>
+                            <li>Get instant, curated results</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <h5 class="mt-4"><i class="bi bi-collection-fill text-success me-2"></i>Resource Sources</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <h6><i class="bi bi-play-circle text-danger me-1"></i> Videos</h6>
+                            <ul class="small">
+                                <li>YouTube Education</li>
+                                <li>Khan Academy</li>
+                                <li>TED-Ed</li>
+                                <li>National Geographic</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <h6><i class="bi bi-file-text text-info me-1"></i> Articles</h6>
+                            <ul class="small">
+                                <li>National Geographic</li>
+                                <li>NASA Education</li>
+                                <li>Smithsonian</li>
+                                <li>Science News</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <h6><i class="bi bi-file-earmark-text text-success me-1"></i> Worksheets</h6>
+                            <ul class="small">
+                                <li>Khan Academy</li>
+                                <li>Education.com</li>
+                                <li>Common Core Sheets</li>
+                                <li>Super Teacher Worksheets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-4">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Pro Tip:</strong> Save your favorite resources to build a personal library for quick access during lesson planning!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container">
+        <div id="toast" class="custom-toast">
+            <i class="toast-icon bi"></i>
+            <div class="toast-message"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Comprehensive educational resources database with consistent structure
+        const educationalResources = {
+            "Photosynthesis": {
+                videos: [
+                    {
+                        id: 1,
+                        title: "Photosynthesis: The Biochemical Process",
+                        description: "A comprehensive explanation of how plants convert sunlight into energy through photosynthesis, perfect for middle school students.",
+                        url: "https://www.youtube.com/watch?v=uixA8voIAsw",
+                        thumbnail: "https://img.youtube.com/vi/uixA8voIAsw/hqdefault.jpg",
+                        source: "Amoeba Sisters",
+                        ageGroup: "11-13",
+                        duration: "7:59"
+                    },
+                    {
+                        id: 2,
+                        title: "Photosynthesis for Kids",
+                        description: "A fun, animated explanation of photosynthesis designed for elementary students with simple language and colorful visuals.",
+                        url: "https://www.youtube.com/watch?v=D1Ymc31__jM",
+                        thumbnail: "https://img.youtube.com/vi/D1Ymc31__jM/hqdefault.jpg",
+                        source: "Homeschool Pop",
+                        ageGroup: "8-10",
+                        duration: "7:31"
+                    },
+                    {
+                        id: 3,
+                        title: "Photosynthesis: Crash Course Biology",
+                        description: "An in-depth look at the light-dependent reactions and Calvin cycle of photosynthesis for high school students.",
+                        url: "https://www.youtube.com/watch?v=sQK3Yr4Sc_k",
+                        thumbnail: "https://img.youtube.com/vi/sQK3Yr4Sc_k/hqdefault.jpg",
+                        source: "Crash Course",
+                        ageGroup: "14-16",
+                        duration: "12:26"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 1,
+                        title: "Photosynthesis - National Geographic",
+                        description: "Explore the fascinating process of photosynthesis with stunning visuals and clear explanations from National Geographic experts.",
+                        url: "https://www.nationalgeographic.com/science/article/photosynthesis",
+                        source: "National Geographic",
+                        ageGroup: "11-13",
+                        readTime: "8 min"
+                    },
+                    {
+                        id: 2,
+                        title: "Photosynthesis for Kids - Science Kids",
+                        description: "A kid-friendly explanation of photosynthesis with simple language, colorful illustrations, and fun facts about plants.",
+                        url: "https://www.sciencekids.co.nz/sciencefacts/plants/photosynthesis.html",
+                        source: "Science Kids",
+                        ageGroup: "8-10",
+                        readTime: "5 min"
+                    },
+                    {
+                        id: 3,
+                        title: "The Calvin Cycle - Biology Online",
+                        description: "Detailed explanation of the Calvin cycle and its role in photosynthesis for advanced high school and college students.",
+                        url: "https://www.biologyonline.com/dictionary/calvin-cycle",
+                        source: "Biology Online",
+                        ageGroup: "17-18",
+                        readTime: "12 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 1,
+                        title: "Photosynthesis Worksheet Pack",
+                        description: "Comprehensive worksheet with questions about the photosynthesis process, including diagrams to label and experiments to try.",
+                        url: "https://www.education.com/worksheet/article/photosynthesis/",
+                        source: "Education.com",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 2,
+                        title: "Plant Life Cycle Coloring Activity",
+                        description: "Fun coloring activity that teaches young students about how plants grow and make food through photosynthesis.",
+                        url: "https://www.superteacherworksheets.com/plants.html",
+                        source: "Super Teacher Worksheets",
+                        ageGroup: "5-7",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 3,
+                        title: "Photosynthesis Quiz & Answer Key",
+                        description: "Comprehensive quiz covering all aspects of photosynthesis for high school students with detailed answer key.",
+                        url: "https://www.biologycorner.com/worksheets/photosynthesis.html",
+                        source: "Biology Corner",
+                        ageGroup: "14-16",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["Cell Biology", "Plant Life", "Ecosystems", "Carbon Cycle"]
+            },
+            "Solar System": {
+                videos: [
+                    {
+                        id: 4,
+                        title: "The Solar System - National Geographic",
+                        description: "A stunning visual journey through our solar system with detailed information about each planet.",
+                        url: "https://www.youtube.com/watch?v=libKVRu-0Xo",
+                        thumbnail: "https://img.youtube.com/vi/libKVRu-0Xo/hqdefault.jpg",
+                        source: "National Geographic",
+                        ageGroup: "11-13",
+                        duration: "45:32"
+                    },
+                    {
+                        id: 5,
+                        title: "Solar System for Kids",
+                        description: "A fun, animated tour of the solar system designed for elementary students with catchy songs and memorable facts.",
+                        url: "https://www.youtube.com/watch?v=F2hTM3zG5eI",
+                        thumbnail: "https://img.youtube.com/vi/F2hTM3zG5eI/hqdefault.jpg",
+                        source: "Kids Learning Tube",
+                        ageGroup: "8-10",
+                        duration: "12:45"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 4,
+                        title: "Our Solar System - NASA",
+                        description: "Official NASA resource with up-to-date information about our solar system, including recent discoveries and missions.",
+                        url: "https://solarsystem.nasa.gov/",
+                        source: "NASA",
+                        ageGroup: "11-13",
+                        readTime: "15 min"
+                    },
+                    {
+                        id: 5,
+                        title: "Solar System Facts for Kids",
+                        description: "Easy-to-understand facts about the solar system with colorful images and simple explanations.",
+                        url: "https://www.ducksters.com/science/solar_system.php",
+                        source: "Ducksters",
+                        ageGroup: "8-10",
+                        readTime: "8 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 4,
+                        title: "Solar System Worksheet Collection",
+                        description: "Printable worksheets covering planets, moons, asteroids, and other objects in our solar system.",
+                        url: "https://www.superteacherworksheets.com/solar-system.html",
+                        source: "Super Teacher Worksheets",
+                        ageGroup: "8-10",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 5,
+                        title: "Solar System Model Project",
+                        description: "Hands-on project to create a scale model of the solar system with instructions and worksheets.",
+                        url: "https://www.education.com/activity/article/solar-system-model/",
+                        source: "Education.com",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["Space Exploration", "Planets", "Astronomy", "Gravity"]
+            },
+            "Chemical Reactions": {
+                videos: [
+                    {
+                        id: 6,
+                        title: "Chemical Reactions - Crash Course Chemistry",
+                        description: "An engaging explanation of chemical reactions, including equations, types of reactions, and real-world examples.",
+                        url: "https://www.youtube.com/watch?v=FO8YzTgIA84",
+                        thumbnail: "https://img.youtube.com/vi/FO8YzTgIA84/hqdefault.jpg",
+                        source: "Crash Course",
+                        ageGroup: "14-16",
+                        duration: "12:14"
+                    },
+                    {
+                        id: 7,
+                        title: "Chemical Reactions for Kids",
+                        description: "Simple explanations of chemical reactions with fun experiments that can be done at home with adult supervision.",
+                        url: "https://www.youtube.com/watch?v=IM630Ug9q_4",
+                        thumbnail: "https://img.youtube.com/vi/IM630Ug9q_4/hqdefault.jpg",
+                        source: "SciShow Kids",
+                        ageGroup: "8-10",
+                        duration: "5:23"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 6,
+                        title: "Understanding Chemical Reactions",
+                        description: "Comprehensive guide to chemical reactions, including how to balance equations and identify reaction types.",
+                        url: "https://www.chemicool.com/definition/reaction.html",
+                        source: "Chemicool",
+                        ageGroup: "14-16",
+                        readTime: "12 min"
+                    },
+                    {
+                        id: 7,
+                        title: "Chemical Reactions for Kids",
+                        description: "Simple explanations of chemical reactions with examples from everyday life.",
+                        url: "https://www.sciencekids.co.nz/sciencefacts/chemistry/chemicalreactions.html",
+                        source: "Science Kids",
+                        ageGroup: "8-10",
+                        readTime: "6 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 6,
+                        title: "Chemical Reactions Worksheet",
+                        description: "Practice identifying different types of chemical reactions and balancing chemical equations.",
+                        url: "https://www.chemistryworksheet.com/balancing-equations.html",
+                        source: "Chemistry Worksheet",
+                        ageGroup: "14-16",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 7,
+                        title: "Simple Chemical Reactions",
+                        description: "Introduction to chemical reactions with simple experiments and observation sheets.",
+                        url: "https://www.education.com/worksheet/article/simple-chemical-reactions/",
+                        source: "Education.com",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["Atoms", "Molecules", "Periodic Table", "Acids and Bases"]
+            },
+            "Fractions": {
+                videos: [
+                    {
+                        id: 8,
+                        title: "Introduction to Fractions",
+                        description: "Learn the basics of fractions with visual examples and simple explanations for elementary students.",
+                        url: "https://www.youtube.com/watch?v=n0FZhQ_GkKw",
+                        thumbnail: "https://img.youtube.com/vi/n0FZhQ_GkKw/hqdefault.jpg",
+                        source: "Math Antics",
+                        ageGroup: "8-10",
+                        duration: "9:14"
+                    },
+                    {
+                        id: 9,
+                        title: "Understanding Fractions",
+                        description: "A comprehensive guide to understanding fractions, equivalent fractions, and simplifying fractions.",
+                        url: "https://www.youtube.com/watch?v=5x_1E_3i_t8",
+                        thumbnail: "https://img.youtube.com/vi/5x_1E_3i_t8/hqdefault.jpg",
+                        source: "Khan Academy",
+                        ageGroup: "11-13",
+                        duration: "11:51"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 8,
+                        title: "Understanding Fractions - Khan Academy",
+                        description: "Comprehensive guide to understanding fractions with interactive examples and practice problems for all levels.",
+                        url: "https://www.khanacademy.org/math/arithmetic/fraction-arithmetic",
+                        source: "Khan Academy",
+                        ageGroup: "11-13",
+                        readTime: "15 min"
+                    },
+                    {
+                        id: 9,
+                        title: "Fractions Made Easy - Math is Fun",
+                        description: "Simple explanations of fractions with visual aids and real-world examples perfect for elementary students.",
+                        url: "https://www.mathsisfun.com/fractions.html",
+                        source: "Math is Fun",
+                        ageGroup: "8-10",
+                        readTime: "10 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 8,
+                        title: "Fraction Practice Worksheets",
+                        description: "Collection of fraction worksheets covering addition, subtraction, multiplication, and division of fractions.",
+                        url: "https://www.commoncoresheets.com/fractions.php",
+                        source: "Common Core Sheets",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 9,
+                        title: "Beginning Fractions Worksheet",
+                        description: "Introduction to fractions with visual aids and simple exercises perfect for elementary students.",
+                        url: "https://www.math-aids.com/Fractions/",
+                        source: "Math-Aids",
+                        ageGroup: "8-10",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["Decimals", "Percentages", "Ratios", "Basic Math"]
+            },
+            "Geometry": {
+                videos: [
+                    {
+                        id: 10,
+                        title: "Geometry Basics",
+                        description: "Introduction to basic geometry concepts including points, lines, angles, and shapes.",
+                        url: "https://www.youtube.com/watch?v=299HJ5aT3qk",
+                        thumbnail: "https://img.youtube.com/vi/299HJ5aT3qk/hqdefault.jpg",
+                        source: "Math Antics",
+                        ageGroup: "11-13",
+                        duration: "10:45"
+                    },
+                    {
+                        id: 11,
+                        title: "Area and Perimeter",
+                        description: "Learn how to calculate area and perimeter of various shapes with real-world examples.",
+                        url: "https://www.youtube.com/watch?v=8hMrRf9Tq5Q",
+                        thumbnail: "https://img.youtube.com/vi/8hMrRf9Tq5Q/hqdefault.jpg",
+                        source: "Khan Academy",
+                        ageGroup: "11-13",
+                        duration: "8:23"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 10,
+                        title: "Geometry - Khan Academy",
+                        description: "Comprehensive geometry lessons covering shapes, angles, area, perimeter, and volume with interactive exercises.",
+                        url: "https://www.khanacademy.org/math/geometry",
+                        source: "Khan Academy",
+                        ageGroup: "11-13",
+                        readTime: "20 min"
+                    },
+                    {
+                        id: 11,
+                        title: "Geometry for Kids - Math is Fun",
+                        description: "Kid-friendly introduction to geometry concepts with colorful illustrations and simple explanations.",
+                        url: "https://www.mathsisfun.com/geometry/index.html",
+                        source: "Math is Fun",
+                        ageGroup: "8-10",
+                        readTime: "12 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 10,
+                        title: "Geometry Worksheets",
+                        description: "Practice worksheets for identifying shapes, calculating area and perimeter, and understanding angles.",
+                        url: "https://www.math-aids.com/Geometry/",
+                        source: "Math-Aids",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 11,
+                        title: "Basic Geometry for Kids",
+                        description: "Simple geometry worksheets introducing basic shapes and their properties to young learners.",
+                        url: "https://www.education.com/resources/geometry/",
+                        source: "Education.com",
+                        ageGroup: "8-10",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["Shapes", "Angles", "Area", "Perimeter"]
+            },
+            "World War II": {
+                videos: [
+                    {
+                        id: 12,
+                        title: "World War II: A Short History",
+                        description: "A concise overview of World War II, covering major events and their significance in world history.",
+                        url: "https://www.youtube.com/watch?v=Q78COTwT7nE",
+                        thumbnail: "https://img.youtube.com/vi/Q78COTwT7nE/hqdefault.jpg",
+                        source: "Simple History",
+                        ageGroup: "14-16",
+                        duration: "18:05"
+                    },
+                    {
+                        id: 13,
+                        title: "World War II for Kids",
+                        description: "An age-appropriate introduction to World War II for elementary students with engaging animations.",
+                        url: "https://www.youtube.com/watch?v=1rQZM5h2p4c",
+                        thumbnail: "https://img.youtube.com/vi/1rQZM5h2p4c/hqdefault.jpg",
+                        source: "Educational Videos",
+                        ageGroup: "11-13",
+                        duration: "10:23"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 12,
+                        title: "World War II - History.com",
+                        description: "Comprehensive overview of World War II including causes, major events, and its impact on the modern world.",
+                        url: "https://www.history.com/topics/world-war-ii/world-war-ii-history",
+                        source: "History.com",
+                        ageGroup: "14-16",
+                        readTime: "20 min"
+                    },
+                    {
+                        id: 13,
+                        title: "World War II for Kids - Ducksters",
+                        description: "Age-appropriate introduction to World War II with simple explanations, timelines, and important figures.",
+                        url: "https://www.ducksters.com/history/world_war_ii/",
+                        source: "Ducksters",
+                        ageGroup: "11-13",
+                        readTime: "12 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 12,
+                        title: "World War II Timeline Worksheet",
+                        description: "Interactive timeline worksheet where students can fill in major events of World War II in chronological order.",
+                        url: "https://www.studenthandouts.com/01-archives/world-history/wwii-worksheets/",
+                        source: "Student Handouts",
+                        ageGroup: "14-16",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 13,
+                        title: "World War II Vocabulary Worksheet",
+                        description: "Vocabulary building worksheet with key terms and concepts from World War II for middle school students.",
+                        url: "https://www.teachervision.com/world-war-ii/printable/7356.html",
+                        source: "TeacherVision",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["World History", "The Holocaust", "D-Day", "Cold War"]
+            },
+            "Ancient Egypt": {
+                videos: [
+                    {
+                        id: 14,
+                        title: "Ancient Egypt for Kids",
+                        description: "Explore the fascinating world of ancient Egypt, from pyramids to pharaohs.",
+                        url: "https://www.youtube.com/watch?v=XbV0_1k2g2M",
+                        thumbnail: "https://img.youtube.com/vi/XbV0_1k2g2M/hqdefault.jpg",
+                        source: "Free School",
+                        ageGroup: "8-10",
+                        duration: "8:45"
+                    },
+                    {
+                        id: 15,
+                        title: "The History of Ancient Egypt",
+                        description: "A comprehensive look at the history, culture, and achievements of ancient Egypt.",
+                        url: "https://www.youtube.com/watch?v=OoVJm2D9xvM",
+                        thumbnail: "https://img.youtube.com/vi/OoVJm2D9xvM/hqdefault.jpg",
+                        source: "Crash Course",
+                        ageGroup: "14-16",
+                        duration: "12:34"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 14,
+                        title: "Ancient Egypt - National Geographic",
+                        description: "Explore the mysteries of ancient Egypt, from the pyramids to the pharaohs, with stunning photos and expert insights.",
+                        url: "https://www.nationalgeographic.com/history/ancient-egypt",
+                        source: "National Geographic",
+                        ageGroup: "11-13",
+                        readTime: "10 min"
+                    },
+                    {
+                        id: 15,
+                        title: "Ancient Egypt for Kids - DK Find Out",
+                        description: "Discover ancient Egypt with fun facts, photos, and interactive content designed for children.",
+                        url: "https://www.dkfindout.com/us/history/ancient-egypt/",
+                        source: "DK Find Out",
+                        ageGroup: "8-10",
+                        readTime: "8 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 14,
+                        title: "Ancient Egypt Worksheets",
+                        description: "Collection of worksheets covering hieroglyphics, pyramids, pharaohs, and daily life in ancient Egypt.",
+                        url: "https://www.education.com/resources/ancient-egypt/",
+                        source: "Education.com",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 15,
+                        title: "Egyptian Hieroglyphics Activity",
+                        description: "Hands-on activity where students learn to write their names using ancient Egyptian hieroglyphics.",
+                        url: "https://www.mrdonn.org/egypt.html",
+                        source: "Mr. Donn",
+                        ageGroup: "8-10",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["Pyramids", "Pharaohs", "Hieroglyphics", "Nile River"]
+            },
+            "Grammar": {
+                videos: [
+                    {
+                        id: 16,
+                        title: "Grammar Basics",
+                        description: "Introduction to English grammar with explanations of parts of speech and sentence structure.",
+                        url: "https://www.youtube.com/watch?v=9eY5G2B5J2E",
+                        thumbnail: "https://img.youtube.com/vi/9eY5G2B5J2E/hqdefault.jpg",
+                        source: "English with Lucy",
+                        ageGroup: "11-13",
+                        duration: "15:20"
+                    },
+                    {
+                        id: 17,
+                        title: "Grammar for Kids",
+                        description: "Fun and engaging introduction to grammar concepts for elementary students.",
+                        url: "https://www.youtube.com/watch?v=9eY5G2B5J2E",
+                        thumbnail: "https://img.youtube.com/vi/9eY5G2B5J2E/hqdefault.jpg",
+                        source: "Grammaropolis",
+                        ageGroup: "8-10",
+                        duration: "7:15"
+                    }
+                ],
+                articles: [
+                    {
+                        id: 16,
+                        title: "English Grammar Guide - Purdue OWL",
+                        description: "Comprehensive guide to English grammar rules, punctuation, and writing mechanics from Purdue University.",
+                        url: "https://owl.purdue.edu/owl/general_writing/grammar/index.html",
+                        source: "Purdue OWL",
+                        ageGroup: "14-16",
+                        readTime: "25 min"
+                    },
+                    {
+                        id: 17,
+                        title: "Grammar for Kids - Grammar Monster",
+                        description: "Simple explanations of grammar rules with examples and exercises designed for children.",
+                        url: "https://www.grammar-monster.com/lessons/grammar_for_kids.htm",
+                        source: "Grammar Monster",
+                        ageGroup: "8-10",
+                        readTime: "10 min"
+                    }
+                ],
+                worksheets: [
+                    {
+                        id: 16,
+                        title: "Grammar Worksheets",
+                        description: "Printable worksheets covering parts of speech, punctuation, sentence structure, and common grammar mistakes.",
+                        url: "https://www.k12reader.com/worksheets/",
+                        source: "K12 Reader",
+                        ageGroup: "11-13",
+                        fileType: "PDF"
+                    },
+                    {
+                        id: 17,
+                        title: "Fun Grammar Activities",
+                        description: "Engaging grammar games and activities that make learning grammar fun for elementary students.",
+                        url: "https://www.education.com/activity/grammar/",
+                        source: "Education.com",
+                        ageGroup: "8-10",
+                        fileType: "PDF"
+                    }
+                ],
+                relatedTopics: ["Parts of Speech", "Punctuation", "Writing", "Vocabulary"]
+            }
+        };
+
+        // DOM elements
+        const searchForm = document.getElementById('search-form');
+        const loadingSpinner = document.querySelector('.loading-spinner');
+        const noResultsMessage = document.querySelector('.no-results');
+        const resultsContainer = document.getElementById('results-container');
+        const statsContainer = document.getElementById('stats-container');
+        const videosResults = document.getElementById('videos-results');
+        const articlesResults = document.getElementById('articles-results');
+        const worksheetsResults = document.getElementById('worksheets-results');
+        const savedResourcesContainer = document.getElementById('saved-resources');
+        const toast = document.getElementById('toast');
+        const toastIcon = toast.querySelector('.toast-icon');
+        const toastMessage = toast.querySelector('.toast-message');
+        const relatedTopicsSection = document.getElementById('related-topics');
+        const relatedTopicsList = document.getElementById('related-topics-list');
+
+        // Saved resources
+        let savedResources = JSON.parse(localStorage.getItem('savedResources')) || [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup navigation
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    showPage(page);
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+
+            // Setup filter chips
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chip.classList.toggle('active');
+                });
+            });
+            
+            // Setup topic suggestions
+            document.querySelectorAll('.topic-suggestion').forEach(suggestion => {
+                suggestion.addEventListener('click', () => {
+                    const topic = suggestion.getAttribute('data-topic');
+                    document.getElementById('topic').value = topic;
+                });
+            });
+
+            // Load saved resources
+            displaySavedResources();
+        });
+
+        // Show page
+        function showPage(page) {
+            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+            document.getElementById(`${page}-page`).style.display = 'block';
+        }
+
+        // Search form submission
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const topic = document.getElementById('topic').value.trim();
+            const ageGroup = document.getElementById('age-group').value;
+            const activeTypes = Array.from(document.querySelectorAll('.filter-chip.active')).map(chip => chip.getAttribute('data-type'));
+            
+            if (!topic || !ageGroup) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Show loading spinner
+            loadingSpinner.style.display = 'block';
+            noResultsMessage.style.display = 'none';
+            resultsContainer.style.display = 'none';
+            statsContainer.style.display = 'none';
+            relatedTopicsSection.style.display = 'none';
+            
+            // Simulate API call
+            setTimeout(() => {
+                loadingSpinner.style.display = 'none';
+                
+                // Find matching resources
+                const searchResults = findResources(topic, ageGroup, activeTypes);
+                
+                // Update stats
+                document.getElementById('video-count').textContent = searchResults.videos.length;
+                document.getElementById('article-count').textContent = searchResults.articles.length;
+                document.getElementById('worksheet-count').textContent = searchResults.worksheets.length;
+                
+                // Display results
+                displayResults(searchResults.videos, searchResults.articles, searchResults.worksheets);
+                
+                // Show related topics if available
+                if (searchResults.relatedTopics && searchResults.relatedTopics.length > 0) {
+                    displayRelatedTopics(searchResults.relatedTopics);
+                    relatedTopicsSection.style.display = 'block';
+                }
+                
+                // Show appropriate tab based on available results
+                if (searchResults.videos.length > 0) {
+                    document.getElementById('videos-tab').click();
+                } else if (searchResults.articles.length > 0) {
+                    document.getElementById('articles-tab').click();
+                } else if (searchResults.worksheets.length > 0) {
+                    document.getElementById('worksheets-tab').click();
+                }
+                
+                // Show results container or no results message
+                if (searchResults.videos.length > 0 || searchResults.articles.length > 0 || searchResults.worksheets.length > 0) {
+                    resultsContainer.style.display = 'block';
+                    statsContainer.style.display = 'block';
+                    showToast(`Found ${searchResults.videos.length + searchResults.articles.length + searchResults.worksheets.length} resources for "${topic}"`, 'success');
+                } else {
+                    noResultsMessage.style.display = 'block';
+                    showToast('No resources found for your search criteria', 'info');
+                }
+            }, 1500);
+        });
+
+        // Find resources based on topic, age group, and resource types
+        function findResources(topic, ageGroup, activeTypes) {
+            const results = {
+                videos: [],
+                articles: [],
+                worksheets: [],
+                relatedTopics: []
+            };
+            
+            // Search for exact or partial matches
+            let matchedTopic = null;
+            let matchedKey = null;
+            
+            // First try exact match
+            if (educationalResources[topic]) {
+                matchedTopic = educationalResources[topic];
+                matchedKey = topic;
+            } else {
+                // Try partial match
+                for (const key in educationalResources) {
+                    if (key.toLowerCase().includes(topic.toLowerCase()) || 
+                        topic.toLowerCase().includes(key.toLowerCase())) {
+                        matchedTopic = educationalResources[key];
+                        matchedKey = key;
+                        break;
+                    }
+                }
+            }
+            
+            if (matchedTopic) {
+                // Extract resources based on structure
+                if (matchedTopic.videos && activeTypes.includes('video')) {
+                    results.videos = filterByAgeGroup(matchedTopic.videos, ageGroup);
+                }
+                
+                if (matchedTopic.articles && activeTypes.includes('article')) {
+                    results.articles = filterByAgeGroup(matchedTopic.articles, ageGroup);
+                }
+                
+                if (matchedTopic.worksheets && activeTypes.includes('worksheet')) {
+                    results.worksheets = filterByAgeGroup(matchedTopic.worksheets, ageGroup);
+                }
+                
+                if (matchedTopic.relatedTopics) {
+                    results.relatedTopics = matchedTopic.relatedTopics;
+                }
+            }
+            
+            // If no exact match, try to find related resources
+            if (!matchedTopic) {
+                // This is where you could implement more sophisticated search logic
+                // For now, we'll return empty results
+            }
+            
+            return results;
+        }
+
+        // Filter by age group
+        function filterByAgeGroup(items, ageGroup) {
+            if (!items) return [];
+            
+            return items.filter(item => {
+                // Simple age group matching
+                const itemAgeMin = parseInt(item.ageGroup.split('-')[0]);
+                const itemAgeMax = parseInt(item.ageGroup.split('-')[1]);
+                const searchAgeMin = parseInt(ageGroup.split('-')[0]);
+                const searchAgeMax = parseInt(ageGroup.split('-')[1]);
+                
+                // Check if age ranges overlap
+                return (itemAgeMin <= searchAgeMax && itemAgeMax >= searchAgeMin);
+            });
+        }
+
+        // Display results
+        function displayResults(videos, articles, worksheets) {
+            // Display videos
+            videosResults.innerHTML = '';
+            if (videos.length === 0) {
+                videosResults.innerHTML = '<p class="text-center text-muted p-4">No videos found for this age group.</p>';
+            } else {
+                videos.forEach((video, index) => {
+                    setTimeout(() => {
+                        videosResults.appendChild(createVideoCard(video));
+                    }, index * 100);
+                });
+            }
+            
+            // Display articles
+            articlesResults.innerHTML = '';
+            if (articles.length === 0) {
+                articlesResults.innerHTML = '<p class="text-center text-muted p-4">No articles found for this age group.</p>';
+            } else {
+                articles.forEach((article, index) => {
+                    setTimeout(() => {
+                        articlesResults.appendChild(createArticleCard(article));
+                    }, index * 100);
+                });
+            }
+            
+            // Display worksheets
+            worksheetsResults.innerHTML = '';
+            if (worksheets.length === 0) {
+                worksheetsResults.innerHTML = '<p class="text-center text-muted p-4">No worksheets found for this age group.</p>';
+            } else {
+                worksheets.forEach((worksheet, index) => {
+                    setTimeout(() => {
+                        worksheetsResults.appendChild(createWorksheetCard(worksheet));
+                    }, index * 100);
+                });
+            }
+        }
+
+        // Display related topics
+        function displayRelatedTopics(topics) {
+            relatedTopicsList.innerHTML = '';
+            topics.forEach(topic => {
+                const topicElement = document.createElement('div');
+                topicElement.className = 'related-topic-item';
+                topicElement.textContent = topic;
+                topicElement.addEventListener('click', () => {
+                    document.getElementById('topic').value = topic;
+                    document.getElementById('age-group').value = '';
+                    searchForm.dispatchEvent(new Event('submit'));
+                });
+                relatedTopicsList.appendChild(topicElement);
+            });
+        }
+
+        // Create video card with enhanced UI
+        function createVideoCard(video) {
+            const card = document.createElement('div');
+            card.className = 'result-card fade-in';
+            card.innerHTML = `
+                <div class="result-header video-header">
+                    <i class="bi bi-play-circle-fill me-2"></i>Video Resources
+                </div>
+                <div class="result-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="video-thumbnail">
+                                <img src="${video.thumbnail}" alt="${video.title}">
+                                <div class="play-overlay">
+                                    <div class="play-button">
+                                        <i class="bi bi-play-fill"></i>
+                                    </div>
+                                </div>
+                                <div class="video-duration">${video.duration}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="result-title">${video.title}</div>
+                            <div class="result-description">${video.description}</div>
+                            <div class="result-meta">
+                                <div>
+                                    <span class="result-source"><i class="bi bi-youtube me-1"></i>${video.source}</span>
+                                    <span class="ms-3 badge badge-video">Video</span>
+                                </div>
+                                <div>
+                                    <span class="result-age">Ages ${video.ageGroup}</span>
+                                    <button class="btn btn-sm btn-outline-primary ms-2 save-btn" data-id="${video.id}" data-type="video">
+                                        <i class="bi bi-bookmark"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <a href="${video.url}" target="_blank" class="btn btn-danger">
+                                    <i class="bi bi-play-circle me-1"></i> Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event to thumbnail
+            card.querySelector('.video-thumbnail').addEventListener('click', () => {
+                window.open(video.url, '_blank');
+            });
+            
+            // Add save button event listener
+            card.querySelector('.save-btn').addEventListener('click', () => {
+                saveResource(video, 'video');
+            });
+            
+            return card;
+        }
+
+        // Create article card with enhanced UI
+        function createArticleCard(article) {
+            const card = document.createElement('div');
+            card.className = 'result-card fade-in';
+            card.innerHTML = `
+                <div class="result-header article-header">
+                    <i class="bi bi-file-text-fill me-2"></i>Article Resources
+                </div>
+                <div class="result-item">
+                    <div class="result-title">${article.title}</div>
+                    <div class="result-description">${article.description}</div>
+                    <div class="result-meta">
+                        <div>
+                            <span class="result-source"><i class="bi bi-globe me-1"></i>${article.source}</span>
+                            <span class="ms-3 badge badge-article">Article</span>
+                            <span class="ms-2"><i class="bi bi-clock me-1"></i>${article.readTime} read</span>
+                        </div>
+                        <div>
+                            <span class="result-age">Ages ${article.ageGroup}</span>
+                            <button class="btn btn-sm btn-outline-primary ms-2 save-btn" data-id="${article.id}" data-type="article">
+                                <i class="bi bi-bookmark"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <a href="${article.url}" target="_blank" class="btn btn-info">
+                            <i class="bi bi-arrow-right-circle me-1"></i> Read Article
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Add save button event listener
+            card.querySelector('.save-btn').addEventListener('click', () => {
+                saveResource(article, 'article');
+            });
+            
+            return card;
+        }
+
+        // Create worksheet card with enhanced UI
+        function createWorksheetCard(worksheet) {
+            const card = document.createElement('div');
+            card.className = 'result-card fade-in';
+            card.innerHTML = `
+                <div class="result-header worksheet-header">
+                    <i class="bi bi-file-earmark-text-fill me-2"></i>Worksheet Resources
+                </div>
+                <div class="result-item">
+                    <div class="result-title">${worksheet.title}</div>
+                    <div class="result-description">${worksheet.description}</div>
+                    <div class="result-meta">
+                        <div>
+                            <span class="result-source"><i class="bi bi-globe me-1"></i>${worksheet.source}</span>
+                            <span class="ms-3 badge badge-worksheet">Worksheet</span>
+                            <span class="ms-2"><i class="bi bi-file-earmark me-1"></i>${worksheet.fileType}</span>
+                        </div>
+                        <div>
+                            <span class="result-age">Ages ${worksheet.ageGroup}</span>
+                            <button class="btn btn-sm btn-outline-primary ms-2 save-btn" data-id="${worksheet.id}" data-type="worksheet">
+                                <i class="bi bi-bookmark"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <a href="${worksheet.url}" target="_blank" class="btn btn-success">
+                            <i class="bi bi-download me-1"></i> Download Worksheet
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Add save button event listener
+            card.querySelector('.save-btn').addEventListener('click', () => {
+                saveResource(worksheet, 'worksheet');
+            });
+            
+            return card;
+        }
+
+        // Save resource
+        function saveResource(resource, type) {
+            // Check if already saved
+            if (savedResources.some(r => r.id === resource.id && r.type === type)) {
+                showToast('Resource already saved', 'info');
+                return;
+            }
+            
+            // Add to saved resources
+            savedResources.push({ ...resource, type, savedAt: new Date().toISOString() });
+            localStorage.setItem('savedResources', JSON.stringify(savedResources));
+            
+            // Update button
+            const saveBtn = document.querySelector(`.save-btn[data-id="${resource.id}"][data-type="${type}"]`);
+            if (saveBtn) {
+                saveBtn.innerHTML = '<i class="bi bi-bookmark-fill"></i> Saved';
+                saveBtn.disabled = true;
+            }
+            
+            showToast('Resource saved successfully', 'success');
+        }
+
+        // Display saved resources with enhanced UI
+        function displaySavedResources() {
+            if (savedResources.length === 0) {
+                savedResourcesContainer.innerHTML = '<p class="text-center text-muted">You haven\'t saved any resources yet.</p>';
+                return;
+            }
+            
+            savedResourcesContainer.innerHTML = '';
+            
+            // Group by type
+            const groupedResources = {
+                video: savedResources.filter(r => r.type === 'video'),
+                article: savedResources.filter(r => r.type === 'article'),
+                worksheet: savedResources.filter(r => r.type === 'worksheet')
+            };
+            
+            // Display each group
+            Object.entries(groupedResources).forEach(([type, resources]) => {
+                if (resources.length === 0) return;
+                
+                const typeTitle = type.charAt(0).toUpperCase() + type.slice(1) + 's';
+                const typeIcon = type === 'video' ? 'play-circle-fill' : type === 'article' ? 'file-text-fill' : 'file-earmark-text-fill';
+                const typeColor = type === 'video' ? 'danger' : type === 'article' ? 'info' : 'success';
+                
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'mb-4';
+                groupDiv.innerHTML = `
+                    <h5 class="mb-3"><i class="bi bi-${typeIcon} text-${typeColor} me-2"></i>${typeTitle} (${resources.length})</h5>
+                    <div class="list-group">
+                        ${resources.map(resource => `
+                            <div class="saved-item">
+                                <h5>${resource.title}</h5>
+                                <p>${resource.description}</p>
+                                <div class="meta-info">
+                                    <span><i class="bi bi-globe me-1"></i>${resource.source} | Ages ${resource.ageGroup}</span>
+                                    <div>
+                                        <a href="${resource.url}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-box-arrow-up-right"></i> Open
+                                        </a>
+                                        <button class="btn btn-sm btn-outline-danger ms-2 remove-btn" data-id="${resource.id}" data-type="${resource.type}">
+                                            <i class="bi bi-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                savedResourcesContainer.appendChild(groupDiv);
+            });
+            
+            // Add remove button event listeners
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    const type = btn.getAttribute('data-type');
+                    
+                    savedResources = savedResources.filter(r => !(r.id === id && r.type === type));
+                    localStorage.setItem('savedResources', JSON.stringify(savedResources));
+                    
+                    displaySavedResources();
+                    showToast('Resource removed', 'info');
+                });
+            });
+        }
+
+        // Show toast notification
+        function showToast(message, type) {
+            toastMessage.textContent = message;
+            
+            // Set icon and color based on type
+            toastIcon.className = 'toast-icon bi';
+            if (type === 'success') {
+                toastIcon.classList.add('bi-check-circle-fill', 'toast-success');
+            } else if (type === 'error') {
+                toastIcon.classList.add('bi-exclamation-circle-fill', 'toast-error');
+            } else {
+                toastIcon.classList.add('bi-info-circle-fill', 'toast-info');
+            }
+            
+            // Show toast
+            toast.classList.add('show');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
