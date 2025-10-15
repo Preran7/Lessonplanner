@@ -799,6 +799,7 @@
         <span></span>
         <span></span>
         <span></span>
+        <span></span>
     </div>
 
     <!-- Sidebar -->
@@ -833,7 +834,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="topic" class="form-label">Topic</label>
-                            <input type="text" class="form-control" id="topic" placeholder="e.g., Photosynthesis, Fractions, World War II" required>
+                            <input type="text" class="form-control" id="topic" placeholder="e.g., Photosynthesis, Fractions, World War II, Electricity" required>
                             <div class="topic-suggestions">
                                 <div class="topic-suggestion" data-topic="Photosynthesis">Photosynthesis</div>
                                 <div class="topic-suggestion" data-topic="Fractions">Fractions</div>
@@ -1610,6 +1611,72 @@
             }
         };
 
+        // Fallback resources for topics not in the main database
+        const fallbackResources = {
+            videos: [
+                {
+                    id: 1001,
+                    title: "Educational Video Search",
+                    description: "Search for educational videos on YouTube about this topic. Try searching for specific concepts related to your topic.",
+                    url: `https://www.youtube.com/results?search_query=educational+`,
+                    thumbnail: "https://img.youtube.com/vi/default/hqdefault.jpg",
+                    source: "YouTube Education",
+                    ageGroup: "8-18",
+                    duration: "Various"
+                },
+                {
+                    id: 1002,
+                    title: "Khan Academy General Search",
+                    description: "Browse Khan Academy's extensive library of educational videos covering various subjects and topics.",
+                    url: "https://www.khanacademy.org/",
+                    thumbnail: "https://img.youtube.com/vi/default/hqdefault.jpg",
+                    source: "Khan Academy",
+                    ageGroup: "8-18",
+                    duration: "Various"
+                }
+            ],
+            articles: [
+                {
+                    id: 2001,
+                    title: "Educational Articles Search",
+                    description: "Find educational articles and reading materials about this topic from various educational websites.",
+                    url: "https://www.google.com/search?q=educational+articles+about+",
+                    source: "Educational Websites",
+                    ageGroup: "8-18",
+                    readTime: "Various"
+                },
+                {
+                    id: 2002,
+                    title: "National Geographic Education",
+                    description: "Explore National Geographic's vast collection of educational articles covering science, history, and geography.",
+                    url: "https://www.nationalgeographic.com/education/",
+                    source: "National Geographic",
+                    ageGroup: "8-18",
+                    readTime: "Various"
+                }
+            ],
+            worksheets: [
+                {
+                    id: 3001,
+                    title: "Worksheet Search Engine",
+                    description: "Search for printable worksheets and educational activities related to this topic.",
+                    url: "https://www.google.com/search?q=printable+worksheets+for+",
+                    source: "Various Educational Sites",
+                    ageGroup: "5-18",
+                    fileType: "PDF"
+                },
+                {
+                    id: 3002,
+                    title: "Education.com Resources",
+                    description: "Browse Education.com's collection of worksheets, lesson plans, and activities for all subjects.",
+                    url: "https://www.education.com/",
+                    source: "Education.com",
+                    ageGroup: "5-18",
+                    fileType: "PDF"
+                }
+            ]
+        };
+
         // DOM elements
         const searchForm = document.getElementById('search-form');
         const loadingSpinner = document.querySelector('.loading-spinner');
@@ -1777,15 +1844,87 @@
                 if (matchedTopic.relatedTopics) {
                     results.relatedTopics = matchedTopic.relatedTopics;
                 }
-            }
-            
-            // If no exact match, try to find related resources
-            if (!matchedTopic) {
-                // This is where you could implement more sophisticated search logic
-                // For now, we'll return empty results
+            } else {
+                // Use fallback resources for topics not in database
+                if (activeTypes.includes('video')) {
+                    results.videos = fallbackResources.videos.map(video => ({
+                        ...video,
+                        url: video.url + encodeURIComponent(topic),
+                        title: video.title.replace('Search', topic),
+                        description: video.description.replace('this topic', topic)
+                    }));
+                }
+                
+                if (activeTypes.includes('article')) {
+                    results.articles = fallbackResources.articles.map(article => ({
+                        ...article,
+                        url: article.url + encodeURIComponent(topic),
+                        title: article.title.replace('Search', topic),
+                        description: article.description.replace('this topic', topic)
+                    }));
+                }
+                
+                if (activeTypes.includes('worksheet')) {
+                    results.worksheets = fallbackResources.worksheets.map(worksheet => ({
+                        ...worksheet,
+                        url: worksheet.url + encodeURIComponent(topic),
+                        title: worksheet.title.replace('Search', topic),
+                        description: worksheet.description.replace('this topic', topic)
+                    }));
+                }
+                
+                // Add generic related topics based on subject area
+                results.relatedTopics = generateRelatedTopics(topic);
             }
             
             return results;
+        }
+
+        // Generate related topics for unknown subjects
+        function generateRelatedTopics(topic) {
+            const topicLower = topic.toLowerCase();
+            const relatedTopics = [];
+            
+            // Science-related topics
+            if (topicLower.includes('electricity') || topicLower.includes('magnetism') || 
+                topicLower.includes('energy') || topicLower.includes('physics')) {
+                relatedTopics.push("Energy", "Forces", "Magnetism", "Circuits", "Waves");
+            } else if (topicLower.includes('biology') || topicLower.includes('cells') || 
+                      topicLower.includes('genetics') || topicLower.includes('ecosystem')) {
+                relatedTopics.push("Cells", "Genetics", "Evolution", "Ecology", "Anatomy");
+            } else if (topicLower.includes('chemistry') || topicLower.includes('atoms') || 
+                      topicLower.includes('elements') || topicLower.includes('molecules')) {
+                relatedTopics.push("Atoms", "Elements", "Molecules", "Chemical Reactions", "Periodic Table");
+            }
+            // Math-related topics
+            else if (topicLower.includes('algebra') || topicLower.includes('equations') || 
+                      topicLower.includes('variables')) {
+                relatedTopics.push("Equations", "Functions", "Graphing", "Linear Algebra", "Variables");
+            } else if (topicLower.includes('calculus') || topicLower.includes('derivatives') || 
+                      topicLower.includes('integrals')) {
+                relatedTopics.push("Derivatives", "Integrals", "Limits", "Functions", "Graphing");
+            }
+            // History-related topics
+            else if (topicLower.includes('history') || topicLower.includes('ancient') || 
+                      topicLower.includes('civilization')) {
+                relatedTopics.push("Ancient Civilizations", "World History", "Archaeology", "Timelines", "Historical Figures");
+            }
+            // Geography-related topics
+            else if (topicLower.includes('geography') || topicLower.includes('continents') || 
+                      topicLower.includes('countries') || topicLower.includes('maps')) {
+                relatedTopics.push("Continents", "Countries", "Maps", "Climate", "Landforms");
+            }
+            // Language-related topics
+            else if (topicLower.includes('literature') || topicLower.includes('reading') || 
+                      topicLower.includes('writing')) {
+                relatedTopics.push("Reading Comprehension", "Writing Skills", "Literary Devices", "Poetry", "Storytelling");
+            }
+            // Default topics
+            else {
+                relatedTopics.push("Introduction", "Basic Concepts", "Advanced Topics", "Practical Applications", "History");
+            }
+            
+            return relatedTopics.slice(0, 4); // Return max 4 related topics
         }
 
         // Filter by age group
@@ -1897,7 +2036,7 @@
                             </div>
                             <div class="mt-3">
                                 <a href="${video.url}" target="_blank" class="btn btn-danger">
-                                    <i class="bi bi-play-circle me-1"></i> Watch on YouTube
+                                    <i class="bi bi-play-circle me-1"></i> Watch Video
                                 </a>
                             </div>
                         </div>
